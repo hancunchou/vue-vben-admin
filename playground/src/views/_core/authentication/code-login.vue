@@ -9,29 +9,32 @@ import { $t } from '@vben/locales';
 
 import { message } from 'ant-design-vue';
 
+import { sendVerifyCodeApi } from '#/api';
+import { useAuthStore } from '#/store';
+
 defineOptions({ name: 'CodeLogin' });
+const authStore = useAuthStore();
 
 const loading = ref(false);
 const CODE_LENGTH = 6;
 const loginRef =
   useTemplateRef<InstanceType<typeof AuthenticationCodeLogin>>('loginRef');
-function sendCodeApi(phoneNumber: string) {
+async function sendCodeApi(phoneNumber: string) {
   message.loading({
     content: $t('page.auth.sendingCode'),
     duration: 0,
     key: 'sending-code',
   });
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      message.success({
-        content: $t('page.auth.codeSentTo', [phoneNumber]),
-        duration: 3,
-        key: 'sending-code',
-      });
-      resolve({ code: '123456', phoneNumber });
-    }, 3000);
+
+  await sendVerifyCodeApi(phoneNumber);
+
+  message.success({
+    content: $t('page.auth.codeSentTo', [phoneNumber]),
+    duration: 3,
+    key: 'sending-code',
   });
 }
+
 const formSchema = computed((): VbenFormSchema[] => {
   return [
     {
@@ -94,8 +97,22 @@ const formSchema = computed((): VbenFormSchema[] => {
  * @param values 登录表单数据
  */
 async function handleLogin(values: Recordable<any>) {
-  // eslint-disable-next-line no-console
-  console.log(values);
+  const data = {
+    username: values.phoneNumber,
+    password: values.code,
+    logintype: 1,
+  };
+  authStore.authLogin(data).catch(() => {
+    message.info('登陆失败');
+    // 登陆失败，刷新验证码的演示
+    // const formApi = loginRef.value?.getFormApi();
+    // // 重置验证码组件的值
+    // formApi?.setFieldValue('captcha', false, false);
+    // // 使用表单API获取验证码组件实例，并调用其resume方法来重置验证码
+    // formApi
+    //   ?.getFieldComponentRef<InstanceType<typeof SliderCaptcha>>('captcha')
+    //   ?.resume();
+  });
 }
 </script>
 

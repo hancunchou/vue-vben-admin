@@ -6,5 +6,21 @@ import { requestClient } from '#/api/request';
  * 获取用户信息
  */
 export async function getUserInfoApi() {
-  return requestClient.get<UserInfo>('/user/info');
+  return requestClient.get<UserInfo>(
+    `${import.meta.env.VITE_USER_SERVER_URL}/user/my/info`,
+  );
+
+  //   {
+  //   "code": 0,
+  //   "data": {
+  //     "id": 0,
+  //     "realName": "Vben",
+  //     "roles": [
+  //       "super"
+  //     ],
+  //     "username": "vben"
+  //   },
+  //   "error": null,
+  //   "message": "ok"
+  // }
 }
