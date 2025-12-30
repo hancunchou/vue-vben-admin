@@ -11,6 +11,7 @@ import { GradesConfig } from '#/config/study';
 
 const activeKey = ref('1');
 const grades = ref([]);
+const subjects = ref([]);
 const [CustomLayoutForm, formApi] = useVbenForm({
   // 所有表单项共用，可单独在表单内覆盖
   commonConfig: {
@@ -68,8 +69,8 @@ const [CustomLayoutForm, formApi] = useVbenForm({
           placeholder: '请选择',
           options: grades,
           onChange: async (e: any) => {
-            console.log(e, values, form);
-            const { grades } = await getSubject(e);
+            const data = await getSubject(e);
+            subjects.value=data
           },
         };
       },
@@ -78,43 +79,50 @@ const [CustomLayoutForm, formApi] = useVbenForm({
       component: 'Select',
       fieldName: 'subject',
       label: '科目',
-      // dependencies: {
-      //   trigger(values, form) {
-
-      //     form.setFieldValue('field2', values.educationalLevel);
-      //   },
-      //   // 只有指定的字段改变时，才会触发
-      //   triggerFields: ['educationalLevel'],
-      // },
+      componentProps: (values, form) => {
+         return {
+          allowClear: true,
+          filterOption: true,
+          placeholder: '科目',
+          options: subjects,
+         }
+      },
+      dependencies: {
+        trigger(values, form) {
+          form.setFieldValue('subject', '');
+        },
+        // 只有指定的字段改变时，才会触发
+        triggerFields: ['educationalLevel'],
+      },
     },
 
-    {
-      component: 'Textarea',
-      fieldName: 'field6',
-      // 占满三列空间 基线对齐
-      formItemClass: 'col-span-2 items-baseline',
-      label: '内容',
-    },
-    {
-      component: 'Input',
-      fieldName: 'field7',
-      // 占满2列空间 从第二列开始 相当于前面空了一列
-      formItemClass: 'col-span-2 col-start-2',
-      label: '占满2列',
-    },
-    {
-      component: 'Input',
-      fieldName: 'field8',
-      // 左右留空
-      formItemClass: 'col-start-2',
-      label: '左右留空',
-    },
-    {
-      component: 'InputPassword',
-      fieldName: 'field9',
-      formItemClass: 'col-start-1',
-      label: '字符串',
-    },
+    // {
+    //   component: 'Textarea',
+    //   fieldName: 'field6',
+    //   // 占满三列空间 基线对齐
+    //   formItemClass: 'col-span-2 items-baseline',
+    //   label: '内容',
+    // },
+    // {
+    //   component: 'Input',
+    //   fieldName: 'field7',
+    //   // 占满2列空间 从第二列开始 相当于前面空了一列
+    //   formItemClass: 'col-span-2 col-start-2',
+    //   label: '占满2列',
+    // },
+    // {
+    //   component: 'Input',
+    //   fieldName: 'field8',
+    //   // 左右留空
+    //   formItemClass: 'col-start-2',
+    //   label: '左右留空',
+    // },
+    // {
+    //   component: 'InputPassword',
+    //   fieldName: 'field9',
+    //   formItemClass: 'col-start-1',
+    //   label: '字符串',
+    // },
   ],
   // 一共三列
   // 大屏一行显示4个，中屏一行显示2个，小屏一行显示1个
