@@ -72,12 +72,8 @@ const [Grid, gridApi] = useVbenVxeGrid({
         <router-link to="/add">
           <Button class="mr-2" type="primary"> 添加试题 </Button>
         </router-link>
-        <Button class="mr-2" type="primary" @click="() => gridApi.query()">
-          刷新当前页面
-        </Button>
-        <Button type="primary" @click="() => gridApi.reload()">
-          刷新并返回第一页
-        </Button>
+        <Button class="mr-2" type="primary" @click="() => gridApi.query()"> 刷新当前页面 </Button>
+        <Button type="primary" @click="() => gridApi.reload()"> 刷新并返回第一页 </Button>
       </template>
     </Grid>
   </Page>
