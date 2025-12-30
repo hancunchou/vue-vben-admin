@@ -1,7 +1,11 @@
 /**
  * 该文件可自行根据业务逻辑进行调整
  */
-import type { AxiosResponseHeaders, RequestClientOptions } from '@vben/request';
+import type {
+  AxiosResponseHeaders,
+  RequestClientOptions,
+  ResponseInterceptorConfig,
+} from '@vben/request';
 
 import { useAppConfig } from '@vben/hooks';
 import { preferences } from '@vben/preferences';
@@ -84,6 +88,37 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
       return config;
     },
   });
+
+  const tokenResponseInterceptor = ({}: {
+    /** 响应数据中装载实际数据的字段名，或者提供一个函数从响应数据中解析需要返回的数据 */
+    dataField: ((response: any) => any) | string;
+  }): ResponseInterceptorConfig => {
+    return {
+      fulfilled: (response: any) => {
+        const accessStore = useAccessStore();
+        if (
+          response.data &&
+          response.data.__classname &&
+          response.data.__classname === 'ResponseData'
+        ) {
+          const responseData = response.data;
+          if (responseData.token) {
+            accessStore.setAccessToken(responseData.token);
+          } else if (responseData.status >= 400) {
+            accessStore.setAccessToken('');
+          }
+        }
+
+        return response;
+      },
+    };
+  };
+
+  client.addResponseInterceptor(
+    tokenResponseInterceptor({
+      dataField: '',
+    }),
+  );
 
   // 处理返回的响应数据格式
   client.addResponseInterceptor(

@@ -13,5 +13,11 @@
     "title": "概览",
     "analytics": "分析页",
     "workspace": "工作台"
+  },
+  "tiku": {
+    "title": "题库",
+    "questionList": "题库列表",
+    "questionAdd":"添加题目",
+    "workspace": "工作台"
   }
 }

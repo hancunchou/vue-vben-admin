@@ -63,13 +63,6 @@ export async function logoutApi() {
       withCredentials: true,
     },
   );
-
-  //   {
-  //   "code": 0,
-  //   "data": "",
-  //   "error": null,
-  //   "message": "ok"
-  // }
 }
 
 /**
