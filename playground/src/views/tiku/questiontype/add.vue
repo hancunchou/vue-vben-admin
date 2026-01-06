@@ -25,7 +25,6 @@ const [CustomLayoutForm, formApi] = useVbenForm({
   layout: 'horizontal',
   handleSubmit: onSubmitQuestionType,
   schema: [
-    
     {
       component: 'Input',
       dependencies: {
@@ -57,14 +56,14 @@ const [CustomLayoutForm, formApi] = useVbenForm({
       componentProps: {
         mode: 'multiple',
         name: 'cname',
-        options: [...GradesConfig[0],...GradesConfig[1],...GradesConfig[2]],
+        options: [...GradesConfig[0], ...GradesConfig[1], ...GradesConfig[2]],
       },
       fieldName: 'grades',
-      value:[1,2,3,4,5,6,7,8,9,10,11,12],
+      value: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
       label: '年级',
-       formItemClass: 'col-span-3 items-baseline',
+      formItemClass: 'col-span-3 items-baseline',
     },
-    
+
     {
       component: 'RadioGroup',
       value: 1,
@@ -83,13 +82,12 @@ const [CustomLayoutForm, formApi] = useVbenForm({
       fieldName: 'objective',
       label: '主客观',
       formItemClass: 'col-start-1 items-baseline',
-
     },
     {
       component: 'ApiSelect',
       fieldName: 'subjects',
       label: '科目',
-      value:[1,2,3,4,5,6,7,8],
+      value: [1, 2, 3, 4, 5, 6, 7, 8],
       componentProps: {
         mode: 'multiple',
         name: 'subject',
@@ -107,10 +105,10 @@ const [CustomLayoutForm, formApi] = useVbenForm({
       formItemClass: 'col-span-3  items-baseline',
       label: '问题描述',
       componentProps: {
-        Rows:4
-      }
+        Rows: 4,
+      },
     },
-     {
+    {
       component: 'Divider',
       fieldName: '_divider',
       formItemClass: 'col-span-4',
@@ -122,26 +120,19 @@ const [CustomLayoutForm, formApi] = useVbenForm({
   wrapperClass: 'grid-cols-1 md:grid-cols-3 lg:grid-cols-4',
 });
 
-function  onSubmitQuestionType(values: Record<string, any>) {
-   addQuestinType(values)
+function onSubmitQuestionType(values: Record<string, any>) {
+  addQuestinType(values);
 }
-
-
 </script>
 
 <template>
-  <Page
-    content-class="flex flex-col gap-4"
-    description="添加题型，题型模板"
-    title="添加题型"
-  >
- 
+  <Page content-class="flex flex-col gap-4" description="添加题型，题型模板" title="添加题型">
     <template #extra>
       <DocButton class="mb-2" path="/components/common-ui/vben-form" />
     </template>
 
     <Card>
-       <CustomLayoutForm />
+      <CustomLayoutForm />
     </Card>
   </Page>
 </template>

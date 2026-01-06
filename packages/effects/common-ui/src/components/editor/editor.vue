@@ -38,15 +38,7 @@ const editorInit = {
   language: 'zh_CN',
   language_url: 'https://cdn.tiny.cloud/1/no-api-key/tinymce/7/langs/zh_CN.js', // 语言包路径
   menubar: 'edit view insert format tools table',
-  plugins: [
-    'code',
-    'link',
-    'table',
-    'image',
-    'preview',
-    'fullscreen',
-    'emoticons',
-  ],
+  plugins: ['code', 'link', 'table', 'image', 'preview', 'fullscreen', 'emoticons'],
   toolbar,
   placeholder: '请输入内容...',
   // 图片上传配置
@@ -78,7 +70,7 @@ watch(
     if (isInit.value && !value) {
       editorRef.value?.resetContent();
     }
-  },
+  }
 );
 
 // 编辑器初始化完成
@@ -107,11 +99,8 @@ const handleError = (error: Error) => {
       @error="handleError"
     />
 
-          <!-- tinymceScriptSrc="https://cdn.tiny.cloud/1/no-api-key/tinymce/8.3.1-116/tinymce.min.js" -->
-
+    <!-- tinymceScriptSrc="https://cdn.tiny.cloud/1/no-api-key/tinymce/8.3.1-116/tinymce.min.js" -->
   </div>
-
-
 </template>
 <style>
 .tox-promotion,

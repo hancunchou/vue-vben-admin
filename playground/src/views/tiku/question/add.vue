@@ -8,7 +8,6 @@ import { useVbenForm } from '#/adapter/form';
 import { getSubject } from '#/api/tiku/subject';
 import { addQuestinBaseInfo } from '#/api/tiku/question';
 
-
 import { GradesConfig } from '#/config/study';
 import { message } from 'ant-design-vue';
 
@@ -26,7 +25,6 @@ const [CustomLayoutForm, formApi] = useVbenForm({
   layout: 'horizontal',
   handleSubmit: onSubmitQuestionBaseInfo,
   schema: [
-    
     {
       component: 'Input',
       dependencies: {
@@ -134,7 +132,6 @@ const [CustomLayoutForm, formApi] = useVbenForm({
 });
 
 const [SyncForm] = useVbenForm({
-  
   schema: [
     {
       component: 'Input',
@@ -165,11 +162,9 @@ const [SyncForm] = useVbenForm({
   wrapperClass: 'grid-cols-1 md:grid-cols-3 lg:grid-cols-4',
 });
 
-
-function  onSubmitQuestionBaseInfo(values: Record<string, any>) {
-   addQuestinBaseInfo(values)
+function onSubmitQuestionBaseInfo(values: Record<string, any>) {
+  addQuestinBaseInfo(values);
 }
-
 </script>
 
 <template>
