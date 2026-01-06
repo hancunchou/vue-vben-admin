@@ -34,6 +34,27 @@ const routes: RouteRecordRaw[] = [
         },
       },
       {
+        name: 'QuestionType',
+        path: '/question_type',
+        component: () => import('#/views/tiku/questiontype/index.vue'),
+        meta: {
+          affixTab: true,
+          icon: 'tabler:math-pi-divide-2',
+          title: $t('page.tiku.question_type'),
+        },
+        children: [],
+      },
+      {
+        name: 'AddQuestionType',
+        path: '/add_question_type',
+        component: () => import('#/views/tiku/questiontype/add.vue'),
+        meta: {
+          affixTab: true,
+          icon: 'fluent:add-12-filled',
+          title: $t('page.tiku.addQuestionType'),
+        },
+      },
+      {
         name: 'Workspace',
         path: '/workspace',
         component: () => import('#/views/dashboard/workspace/index.vue'),

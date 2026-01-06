@@ -25,7 +25,6 @@ export const defaultResponseInterceptor = ({
       if (config.responseReturn === 'raw') {
         return response;
       }
-
       if (status >= 200 && status < 400) {
         if (config.responseReturn === 'body') {
           return responseData;

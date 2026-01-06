@@ -333,7 +333,9 @@ const previewImage = async (
 
   render(h(PreviewWrapper), container);
 };
-
+const Editor = defineAsyncComponent(
+  () => import('@vben/common-ui').then(res=>res.Editor),
+);
 // 这里需要自行根据业务组件库进行适配，需要用到的组件都需要在这里类型说明
 export type ComponentType =
   | 'ApiSelect'
@@ -344,6 +346,7 @@ export type ComponentType =
   | 'DatePicker'
   | 'DefaultButton'
   | 'Divider'
+  | 'Editor'
   | 'IconPicker'
   | 'Input'
   | 'InputNumber'
@@ -392,6 +395,7 @@ async function initComponentAdapter() {
       return h(Button, { ...props, attrs, type: 'default' }, slots);
     },
     Divider,
+    Editor,
     IconPicker: withDefaultPlaceholder(IconPicker, 'select', {
       iconSlot: 'addonAfter',
       inputComponent: Input,

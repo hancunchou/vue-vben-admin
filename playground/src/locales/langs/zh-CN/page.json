@@ -16,8 +16,12 @@
   },
   "tiku": {
     "title": "题库",
-    "questionList": "题库列表",
+    "questionList": "题目列表",
     "questionAdd":"添加题目",
+    "question_type": "题型列表",
+    "addQuestionType":"添加题型",
     "workspace": "工作台"
   }
+
+
 }

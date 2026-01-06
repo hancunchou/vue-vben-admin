@@ -120,5 +120,9 @@
       "canvas",
       "node-gyp"
     ]
+  },
+  "dependencies": {
+    "@tinymce/tinymce-vue": "^6.3.0",
+    "tinymce": "^8.3.1"
   }
 }

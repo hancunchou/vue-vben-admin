@@ -104,9 +104,18 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
           const responseData = response.data;
           if (responseData.token) {
             accessStore.setAccessToken(responseData.token);
-          } else if (responseData.status >= 400) {
+          } else if (responseData.status > 400) {
             accessStore.setAccessToken('');
           }
+
+          if(responseData.message){
+            if(responseData.status==200){
+              message.info(responseData.message)
+            }else{
+               message.error(responseData.message)
+            }
+          }
+          
         }
 
         return response;
