@@ -6,7 +6,7 @@ import { Page } from '@vben/common-ui';
 import { Button } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { getExampleTableApi } from '#/api';
+import { getQuestionLists } from '#/api/tiku/question';
 
 interface RowType {
   category: string;
@@ -23,13 +23,13 @@ const gridOptions: VxeGridProps<RowType> = {
     labelField: 'name',
   },
   columns: [
-    { title: '序号', type: 'seq', width: 50 },
-    { align: 'left', title: 'Name', type: 'checkbox', width: 100 },
-    { field: 'category', sortable: true, title: 'Category' },
-    { field: 'color', sortable: true, title: 'Color' },
-    { field: 'productName', sortable: true, title: 'Product Name' },
-    { field: 'price', sortable: true, title: 'Price' },
-    { field: 'releaseDate', formatter: 'formatDateTime', title: 'DateTime' },
+    { title: '序号', type: 'seq', width: 100 },
+    { field:'questionType',  title: '题型',  width: 100 },
+    { field: 'grade', sortable: true, title: '年级',  width: 100 },
+    { field: 'subject', sortable: true, title: '科目',  width: 100 },
+    { field: 'difficulty', sortable: true, title: '难度',  width: 100 },
+    { field: 'contentHtmls', sortable: false, title: '内容',  width: 500 },
+    { field: 'updateTime', formatter: 'formatDateTime', title: '更新时间',width: 150 },
   ],
   exportConfig: {},
   height: 'auto',
@@ -37,7 +37,7 @@ const gridOptions: VxeGridProps<RowType> = {
   proxyConfig: {
     ajax: {
       query: async ({ page, sort }) => {
-        return await getExampleTableApi({
+        return await getQuestionLists({
           page: page.currentPage,
           pageSize: page.pageSize,
           sortBy: sort.field,
@@ -48,7 +48,7 @@ const gridOptions: VxeGridProps<RowType> = {
     sort: true,
   },
   sortConfig: {
-    defaultSort: { field: 'category', order: 'desc' },
+    defaultSort: { field: 'grade', order: 'asc' },
     remote: true,
   },
   toolbarConfig: {

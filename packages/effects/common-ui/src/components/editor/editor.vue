@@ -84,7 +84,6 @@ const handleError = (error: Error) => {
   console.error('编辑器错误', error);
 };
 </script>
-
 <template>
   <div class="w-full">
     <div v-if="!isInit" class="text-gray-600">正在加载...</div>

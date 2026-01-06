@@ -6,7 +6,7 @@ import { Page } from '@vben/common-ui';
 import { Card, TabPane, Tabs } from 'ant-design-vue';
 import { useVbenForm } from '#/adapter/form';
 import { getSubject } from '#/api/tiku/subject';
-import { addQuestinBaseInfo ,getQuestionTypes} from '#/api/tiku/question';
+import { addQuestinBaseInfo, getQuestionTypes } from '#/api/tiku/question';
 
 import { GradesConfig } from '#/config/study';
 import { message } from 'ant-design-vue';
@@ -105,7 +105,7 @@ const [CustomLayoutForm, formApi] = useVbenForm({
           placeholder: '科目',
           options: subjects,
           onChange: async (e: any) => {
-            const data = await getQuestionTypes(values.grade,values.subject);
+            const data = await getQuestionTypes(values.grade, values.subject);
             questionTypes.value = data;
           },
         };
@@ -128,7 +128,7 @@ const [CustomLayoutForm, formApi] = useVbenForm({
           filterOption: true,
           placeholder: '题型',
           options: questionTypes,
-        }
+        };
       },
       dependencies: {
         trigger(values, form) {
@@ -145,7 +145,6 @@ const [CustomLayoutForm, formApi] = useVbenForm({
       label: '难度',
       value: 1,
 
-      
       componentProps: {
         options: [
           {
@@ -168,7 +167,6 @@ const [CustomLayoutForm, formApi] = useVbenForm({
             label: '高难',
             value: 5,
           },
-        
         ],
       },
       formItemClass: 'col-span-1 items-baseline',
@@ -181,15 +179,14 @@ const [CustomLayoutForm, formApi] = useVbenForm({
       formItemClass: 'col-span-1 items-baseline',
       componentProps: {
         min: 1,
-        max:100,
-      }
+        max: 100,
+      },
     },
 
     {
       component: 'Editor',
       fieldName: 'contentHtml',
-      componentProps: {
-      },
+      componentProps: {},
       // 占满三列空间 基线对齐
       formItemClass: 'col-span-4 items-baseline',
       label: '内容',
@@ -231,9 +228,9 @@ const [SyncForm] = useVbenForm({
   wrapperClass: 'grid-cols-1 md:grid-cols-3 lg:grid-cols-4',
 });
 
-async function   onSubmitQuestionBaseInfo(values: Record<string, any>) {
-   const data= await addQuestinBaseInfo(values);
-   message.info('保存成功')
+async function onSubmitQuestionBaseInfo(values: Record<string, any>) {
+  const data = await addQuestinBaseInfo(values);
+  message.info('保存成功');
 }
 </script>
 
