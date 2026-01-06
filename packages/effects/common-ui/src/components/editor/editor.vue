@@ -87,7 +87,7 @@ const handleError = (error: Error) => {
 
 <template>
   <div class="w-full">
-    <div v-if="!isInit" class="text-gray-600">编辑器初始化中...</div>
+    <div v-if="!isInit" class="text-gray-600">正在加载...</div>
     <Editor
       :style="{ opacity: !isInit ? 0 : 1 }"
       v-model="model"

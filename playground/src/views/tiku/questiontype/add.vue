@@ -101,9 +101,9 @@ const [CustomLayoutForm, formApi] = useVbenForm({
 
     {
       component: 'Textarea',
-      fieldName: 'desc',
+      fieldName: 'contents',
       formItemClass: 'col-span-3  items-baseline',
-      label: '问题描述',
+      label: '内容，每行一条',
       componentProps: {
         Rows: 4,
       },

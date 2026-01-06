@@ -10,3 +10,9 @@ export async function addQuestinType(data: any) {
     `${import.meta.env.VITE_GLOB_API_URL}/study/tiku/addQuestionType`,data
   );
 }
+
+export async function getQuestionTypes(grade: number,subject: number) {
+  return requestClient.get<any>(
+    `${import.meta.env.VITE_GLOB_API_URL}/study/tiku/getQuestionTypes?grade=${grade}&subject=${subject}`,
+  );
+}
