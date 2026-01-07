@@ -9,27 +9,29 @@ import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getQuestionLists } from '#/api/tiku/question';
 
 interface RowType {
-  category: string;
-  color: string;
+  questionType: string;
+  grade: string;
   id: string;
-  price: string;
-  productName: string;
-  releaseDate: string;
+  subject: string;
+  difficulty: string;
+  title: string;
+  updateTime: string;
 }
 
 const gridOptions: VxeGridProps<RowType> = {
+  stripe: true,
   checkboxConfig: {
     highlight: true,
     labelField: 'name',
   },
   columns: [
-    { title: '序号', type: 'seq', width: 100 },
-    { field:'questionType',  title: '题型',  width: 100 },
-    { field: 'grade', sortable: true, title: '年级',  width: 100 },
-    { field: 'subject', sortable: true, title: '科目',  width: 100 },
-    { field: 'difficulty', sortable: true, title: '难度',  width: 100 },
-    { field: 'contentHtmls', sortable: false, title: '内容',  width: 500 },
-    { field: 'updateTime', formatter: 'formatDateTime', title: '更新时间',width: 150 },
+    { field:'id', title: '序号', type: 'seq', width: 100 },
+    { field: 'questionType', title: '题型', width: 100 },
+    { field: 'grade', sortable: true, title: '年级', width: 100 },
+    { field: 'subject', sortable: true, title: '科目', width: 100 },
+    { field: 'difficulty', sortable: true, title: '难度', width: 100 },
+    { field: 'title', sortable: false, title: '内容' },
+    { field: 'updateTime', formatter: 'formatDateTime', title: '更新时间', width: 150 },
   ],
   exportConfig: {},
   height: 'auto',
@@ -38,8 +40,8 @@ const gridOptions: VxeGridProps<RowType> = {
     ajax: {
       query: async ({ page, sort }) => {
         return await getQuestionLists({
-          page: page.currentPage,
-          pageSize: page.pageSize,
+          pi: page.currentPage,
+          ps: page.pageSize,
           sortBy: sort.field,
           sortOrder: sort.order,
         });
@@ -63,6 +65,9 @@ const gridOptions: VxeGridProps<RowType> = {
 const [Grid, gridApi] = useVbenVxeGrid({
   gridOptions,
 });
+
+
+
 </script>
 
 <template>

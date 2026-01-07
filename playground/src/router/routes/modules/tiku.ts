@@ -54,15 +54,7 @@ const routes: RouteRecordRaw[] = [
           title: $t('page.tiku.addQuestionType'),
         },
       },
-      {
-        name: 'Workspace',
-        path: '/workspace',
-        component: () => import('#/views/dashboard/workspace/index.vue'),
-        meta: {
-          icon: 'carbon:workspace',
-          title: $t('page.dashboard.workspace'),
-        },
-      },
+      
     ],
   },
 ];

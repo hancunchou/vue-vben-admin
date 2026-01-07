@@ -18,7 +18,6 @@ interface RowType {
   nickname: string;
   role: string;
 }
-
 const gridOptions: VxeGridProps<RowType> = {
   columns: [
     { title: '序号', type: 'seq', width: 50 },
