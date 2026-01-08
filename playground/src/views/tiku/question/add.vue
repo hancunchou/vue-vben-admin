@@ -188,10 +188,9 @@ const [CustomLayoutForm, formApi] = useVbenForm({
       fieldName: 'knowledge',
       label: '知识点',
       value: [],
-      componentProps: {
-      }
-     },
-     
+      componentProps: {},
+    },
+
     {
       component: 'Editor',
       fieldName: 'contentHtml',
@@ -269,7 +268,7 @@ async function onSubmitQuestionBaseInfo(values: Record<string, any>) {
         <TabPane tab="视频讲解" key="3">
           <Form />
         </TabPane>
-         <TabPane tab="互动教学" key="4">
+        <TabPane tab="互动教学" key="4">
           <Form />
         </TabPane>
       </Tabs>

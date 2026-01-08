@@ -25,7 +25,7 @@ const gridOptions: VxeGridProps<RowType> = {
     labelField: 'name',
   },
   columns: [
-    { field:'id', title: '序号', type: 'seq', width: 100 },
+    { field: 'id', title: '序号', type: 'seq', width: 100 },
     { field: 'questionType', title: '题型', width: 100 },
     { field: 'grade', sortable: true, title: '年级', width: 100 },
     { field: 'subject', sortable: true, title: '科目', width: 100 },
@@ -65,9 +65,6 @@ const gridOptions: VxeGridProps<RowType> = {
 const [Grid, gridApi] = useVbenVxeGrid({
   gridOptions,
 });
-
-
-
 </script>
 
 <template>
