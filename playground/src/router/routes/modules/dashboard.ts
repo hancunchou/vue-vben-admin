@@ -18,6 +18,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('#/views/dashboard/analytics/index.vue'),
         meta: {
           affixTab: true,
+          order: 1,
           icon: 'lucide:area-chart',
           title: $t('page.dashboard.analytics'),
         },

@@ -1,3 +1,5 @@
+import { getSubject } from '#/api/tiku/subject';
+
 export const GradesConfig: Array<Array<{ label: string; value: number }>> = [];
 GradesConfig[0] = [
   { label: '一年级', value: 1 },
@@ -17,3 +19,15 @@ GradesConfig[2] = [
   { label: '高二', value: 11 },
   { label: '高三', value: 12 },
 ];
+
+export const GradesConfigAll=[...GradesConfig[0] ,...GradesConfig[1] ,...GradesConfig[2] ]
+export const allSubjects= await getSubject(-1);
+// const allSubjects=[];
+// export async function getAllSubjects(){
+//   return allSubjects;
+// }
+// getSubject(-1).then((data)=>{
+//   console.log(data)
+// })
+//  const allSubjects= await getSubject(-1);
+

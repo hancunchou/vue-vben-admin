@@ -6,7 +6,24 @@ export namespace QuestionTableApi {
     page: number;
     pageSize: number;
   }
+   export interface QuestionType {
+    [key: string]: any;
+    id: string;
+    objective: number,
+    grades: number;
+    subjects: number;
+    updateTime: number;
+    createTime: number;
+
+    title: string;
+    desc: string;
+
+    gradeNames: string[];
+    subjectNames: string[];
+
+  }
 }
+
 
 export async function addQuestinBaseInfo(data: any) {
   return requestClient.post<any>(
@@ -18,10 +35,17 @@ export async function addQuestinType(data: any) {
     `${import.meta.env.VITE_GLOB_API_URL}/study/tiku/addQuestionType`,data
   );
 }
+export async function fetchQuestionType(id: any) {
+  return requestClient.get<any>(
+    `${import.meta.env.VITE_GLOB_API_URL}/study/tiku/fetchQuestionType`,{params:{id}}
+  );
+}
+
+
 
 export async function getQuestionTypes(grade: number,subject: number) {
   return requestClient.get<any>(
-    `${import.meta.env.VITE_GLOB_API_URL}/study/tiku/getQuestionTypes?grade=${grade}&subject=${subject}`,
+    `${import.meta.env.VITE_GLOB_API_URL}/study/tiku/getQuestionTypes`,{params:{grade,subject}}
   );
 }
 
@@ -30,5 +54,9 @@ export async function getQuestionTypes(grade: number,subject: number) {
  */
 export async function getQuestionLists(params: QuestionTableApi.PageFetchParams) {
   return requestClient.post(`${import.meta.env.VITE_GLOB_API_URL}/study/ques/getQuestionLists`, params);
+}
+
+export async function getQuestionTypesApi(params: QuestionTableApi.PageFetchParams) {
+  return requestClient.post(`${import.meta.env.VITE_GLOB_API_URL}/study/ques/getQuestionTypes`, params);
 }
 

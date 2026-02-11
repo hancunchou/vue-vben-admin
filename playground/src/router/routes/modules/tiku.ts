@@ -5,8 +5,8 @@ import { $t } from '#/locales';
 const routes: RouteRecordRaw[] = [
   {
     meta: {
-      icon: 'arcticons:math-wiki',
-      order: -1,
+      icon: 'mdi:source-repository-multiple',
+      order: 2,
       title: $t('page.tiku.title'),
     },
     name: 'tiku',

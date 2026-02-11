@@ -19,8 +19,25 @@
     "questionList": "题目列表",
     "questionAdd":"添加题目",
     "question_type": "题型列表",
-    "addQuestionType":"添加题型",
-    "workspace": "工作台"
+    "addQuestionType":"添加题型"
+  },
+  "paper": {
+    "title": "试卷",
+    "rawdocList": "原始文档",
+    "paperList": "试卷库"
+  },
+  "aitask": {
+    "title": "AI任务",
+    "aitasklist": "任务列表"
+  },
+  "know": {
+    "title": "知识点",
+    "list": "知识点列表"
+  },
+  "op": {
+    "name":"操作",
+    "delete":"删除",
+    "edit":"修改"
   }
 
 
