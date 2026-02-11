@@ -25,8 +25,6 @@ const gridOptions: VxeGridProps<RowType> = {
     labelField: 'name',
   },
 
-
-
   columns: [
     { field: 'id', title: '序号', type: 'seq', width: 100 },
     { field: 'wordTitle', title: '标题' },
@@ -40,23 +38,23 @@ const gridOptions: VxeGridProps<RowType> = {
   proxyConfig: {
     ajax: {
       query: async ({ page, sort }) => {
-        const data= await getRawDocLists({
+        const data = await getRawDocLists({
           pi: page.currentPage,
           ps: page.pageSize,
           sortBy: sort.field,
           sortOrder: sort.order,
         });
-        for(const d of data.list){
-          d.createTime=d.createTime*1000;
-          d.updateTime=d.updateTime*1000;
+        for (const d of data.list) {
+          d.createTime = d.createTime * 1000;
+          d.updateTime = d.updateTime * 1000;
         }
         return data;
       },
     },
     response: {
-          result: 'list',
-          total: 'total',
-          list: 'list',
+      result: 'list',
+      total: 'total',
+      list: 'list',
     },
     sort: true,
   },

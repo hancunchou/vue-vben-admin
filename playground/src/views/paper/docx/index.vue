@@ -11,7 +11,6 @@ import { getStudyDocIndexLists } from '#/api/tiku/paper';
 import { formatGrade, formatSubject } from '#/formatter/formatter';
 import { GradesConfigAll, allSubjects } from '#/config/study';
 
-
 interface RowType {
   questionType: string;
   grade: string;
@@ -21,7 +20,6 @@ interface RowType {
   title: string;
   updateTime: string;
 }
-
 
 const formOptions: VbenFormProps = {
   // 默认展开
@@ -49,23 +47,22 @@ const formOptions: VbenFormProps = {
       },
       fieldName: 'category',
       label: '识别结果',
-      value:2,
+      value: 2,
       formItemClass: 'col-span-1 items-baseline',
     },
 
     {
       component: 'Select',
-       formItemClass: 'col-span-1 items-baseline',
+      formItemClass: 'col-span-1 items-baseline',
 
       componentProps: {
         allowClear: true,
         placeholder: '请选择',
         options: GradesConfigAll,
-
       },
       fieldName: 'grade',
       label: '年级',
-      value:-1,
+      value: -1,
     },
     {
       component: 'Select',
@@ -73,11 +70,10 @@ const formOptions: VbenFormProps = {
         allowClear: true,
         placeholder: '请选择',
         options: allSubjects,
-
       },
       fieldName: 'subject',
       label: '科目',
-      value:-1,
+      value: -1,
     },
     {
       component: 'Input',
@@ -87,7 +83,7 @@ const formOptions: VbenFormProps = {
       },
       fieldName: 'title',
       label: '标题',
-      value:'',
+      value: '',
     },
   ],
   // 控制表单是否显示折叠按钮
@@ -106,9 +102,9 @@ const gridOptions: VxeGridProps<RowType> = {
   },
   columns: [
     { field: 'id', title: '序号', type: 'seq', width: 100 },
-    { field: 'grade', sortable: true, title: '年级', formatter:formatGrade,width: 100 },
-    { field: 'subject', sortable: true, title: '科目',formatter:formatSubject, width: 100 },
-    { field: 'province', sortable: false, title: '省份',width: 100 },
+    { field: 'grade', sortable: true, title: '年级', formatter: formatGrade, width: 100 },
+    { field: 'subject', sortable: true, title: '科目', formatter: formatSubject, width: 100 },
+    { field: 'province', sortable: false, title: '省份', width: 100 },
 
     { field: 'difficulty', sortable: true, title: '难度', width: 100 },
     { field: 'title', sortable: false, title: '标题' },
@@ -126,19 +122,19 @@ const gridOptions: VxeGridProps<RowType> = {
           sortBy: sort.field,
           sortOrder: sort.order,
           ...formValues,
-          finaldoc:false,
+          finaldoc: false,
         });
-         for(const d of data.list){
-          d.createTime=d.createTime*1000;
-          d.updateTime=d.updateTime*1000;
+        for (const d of data.list) {
+          d.createTime = d.createTime * 1000;
+          d.updateTime = d.updateTime * 1000;
         }
-        return data
+        return data;
       },
     },
-     response: {
-          result: 'list',
-          total: 'total',
-          list: 'list',
+    response: {
+      result: 'list',
+      total: 'total',
+      list: 'list',
     },
     sort: true,
   },

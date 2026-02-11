@@ -12,10 +12,7 @@ import type { QuestionTableApi } from '#/api/tiku/question';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 
-import type {
-  OnActionClickParams,
-  VxeTableGridOptions,
-} from '#/adapter/vxe-table';
+import type { OnActionClickParams, VxeTableGridOptions } from '#/adapter/vxe-table';
 
 interface RowType {
   category: string;
@@ -33,7 +30,7 @@ const gridOptions: VxeGridProps<QuestionTableApi.QuestionType> = {
   },
   columns: [
     { title: '序号', type: 'seq', width: 50 },
-    { field: 'title', sortable: false, title: '题型' , width: 150},
+    { field: 'title', sortable: false, title: '题型', width: 150 },
     { field: 'desc', sortable: false, title: '描述' },
     { field: 'subjectNames', sortable: false, title: '科目' },
     { field: 'gradeNames', sortable: false, title: '年级' },
@@ -54,7 +51,7 @@ const gridOptions: VxeGridProps<QuestionTableApi.QuestionType> = {
           {
             code: 'delete',
             text: '删除',
-          },       
+          },
         ],
       },
       field: 'operation',
@@ -96,14 +93,13 @@ const [Grid, gridApi] = useVbenVxeGrid({
 });
 
 function onActionClick(e: OnActionClickParams<QuestionTableApi.QuestionType>) {
-
   switch (e.code) {
     case 'delete': {
       // onDelete(e.row);
       break;
     }
     case 'edit': {
-       router.push({ path: '/add_question_type',query:{id: e.row.id} });
+      router.push({ path: '/add_question_type', query: { id: e.row.id } });
       break;
     }
   }

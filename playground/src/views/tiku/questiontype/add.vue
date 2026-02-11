@@ -9,11 +9,10 @@ import { getSubject } from '#/api/tiku/subject';
 
 import { GradesConfig } from '#/config/study';
 import { message } from 'ant-design-vue';
-import { addQuestinType,fetchQuestionType } from '#/api/tiku/question';
-import { useRoute,onBeforeRouteUpdate } from 'vue-router';
+import { addQuestinType, fetchQuestionType } from '#/api/tiku/question';
+import { useRoute, onBeforeRouteUpdate } from 'vue-router';
 import { watchArray } from '@vueuse/core';
 const route = useRoute();
-
 
 const activeKey = ref('1');
 const grades = ref([]);
@@ -52,7 +51,7 @@ const [CustomLayoutForm, formApi] = useVbenForm({
       label: '题型',
       formItemClass: 'col-span-1 items-baseline',
     },
-   
+
     {
       component: 'RadioGroup',
       value: 1,
@@ -130,39 +129,38 @@ const [CustomLayoutForm, formApi] = useVbenForm({
   showActionButtonGroup: false,
 });
 
-
 function onSubmitQuestionType(values: Record<string, any>) {
   addQuestinType(values);
 }
-const act =recordid.value ?"编辑":"添加"
+const act = recordid.value ? '编辑' : '添加';
 
+async function init_record(id: any) {
+  const data = await fetchQuestionType(recordid.value);
+  grades.value = [];
+  subjects.value = [];
+  let i = 0;
+  const gradeLong: number = Number(data.grades);
+  const subject: number = Number(data.subjects);
 
-async function  init_record(id:any){
-  const data=await fetchQuestionType(recordid.value)
-  grades.value=[];
-  subjects.value=[]
-  let i=0;
-  const gradeLong:number=Number(data.grades);
-  const subject:number=Number(data.subjects);
-
-  for(i=0;i<64;i++){
-     if(gradeLong&(1<<i))grades.value.push(i)
-     if(subject&(1<<i))subjects.value.push(i)
+  for (i = 0; i < 64; i++) {
+    if (gradeLong & (1 << i)) grades.value.push(i);
+    if (subject & (1 << i)) subjects.value.push(i);
   }
 
- formApi.setValues(data)
-
+  formApi.setValues(data);
 }
 
-
-if(recordid.value){
-  init_record(recordid.value)
+if (recordid.value) {
+  init_record(recordid.value);
 }
-
 </script>
 
 <template>
-  <Page content-class="flex flex-col gap-4" :description="`${act}题型，题型模板`" :title="`${act}题型`">
+  <Page
+    content-class="flex flex-col gap-4"
+    :description="`${act}题型，题型模板`"
+    :title="`${act}题型`"
+  >
     <template #extra>
       <DocButton class="mb-2" path="/components/common-ui/vben-form" />
     </template>
