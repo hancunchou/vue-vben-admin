@@ -24,6 +24,19 @@ const routes: RouteRecordRaw[] = [
         children: [],
       },
       {
+        name: 'docx_view',
+        path: '/docx/view',
+        component: () => import('#/views/paper/docx/view.vue'),
+        meta: {
+          affixTab: true,
+          hideInMenu: true,
+          icon: 'tabler:math-pi-divide-2',
+          title: '查看文档',
+        },
+        children: [],
+      },
+      
+      {
         name: 'RawDoc',
         path: '/rawdoc',
         component: () => import('#/views/paper/rawdoc/index.vue'),

@@ -10,6 +10,11 @@ import { getStudyDocIndexLists } from '#/api/tiku/paper';
 
 import { formatGrade, formatSubject } from '#/formatter/formatter';
 import { GradesConfigAll, allSubjects } from '#/config/study';
+import { getDocxBlob } from '#/api/tiku/paper';
+
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
 
 interface RowType {
   questionType: string;
@@ -105,10 +110,38 @@ const gridOptions: VxeGridProps<RowType> = {
     { field: 'grade', sortable: true, title: '年级', formatter: formatGrade, width: 100 },
     { field: 'subject', sortable: true, title: '科目', formatter: formatSubject, width: 100 },
     { field: 'province', sortable: false, title: '省份', width: 100 },
-
-    { field: 'difficulty', sortable: true, title: '难度', width: 100 },
+    { field: 'statu', sortable: true, title: '状态', width: 60 },
     { field: 'title', sortable: false, title: '标题' },
     { field: 'updateTime', formatter: 'formatDateTime', title: '更新时间', width: 150 },
+    {
+      align: 'center',
+      cellRender: {
+        attrs: {
+          nameField: 'name',
+          nameTitle: '操作',
+          onClick: onActionClick,
+        },
+        name: 'CellOperation',
+        options: [
+          {
+            code: 'parse',
+            text: '解析',
+          },
+          {
+            code: 'view',
+            text: '查看',
+          },
+           {
+            code: 'down',
+            text: '下载',
+          },
+        ],
+      },
+      field: 'operation',
+      fixed: 'right',
+      title: '操作',
+      width: 200,
+    },
   ],
   exportConfig: {},
   height: 'auto',
@@ -155,6 +188,39 @@ const [Grid, gridApi] = useVbenVxeGrid({
   formOptions,
   gridOptions,
 });
+
+function onActionClick(e: any) {
+  switch (e.code) {
+    case 'parse': 
+      {
+        router.push({ path: '/question/docximport', query: { id: e.row.id } });
+        break;
+      }
+    case 'view':
+      {
+        router.push({ path: '/docx/view', query: { id: e.row.id } });
+        break;
+      }break;
+
+    case 'down':
+      {
+        const d=e.row
+        console.log(d)
+         getDocxBlob(d.id).then((data:Blob)=>{
+
+            let blobUrl = window.URL.createObjectURL(data)
+            let link = document.createElement('a')
+            link.download = d.title+".docx"
+            link.style.display = 'none'
+            link.href = blobUrl
+            // 触发点击
+            document.body.appendChild(link)
+            link.click()
+         });
+      } break; 
+   
+  }
+}
 </script>
 
 <template>

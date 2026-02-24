@@ -49,9 +49,13 @@ export async function getQuestionTypes(grade: number,subject: number) {
   );
 }
 
-/**
- * 获取示例表格数据
- */
+export async function doParseQuestionResult(id: number) {
+  return requestClient.get<any>(
+    `${import.meta.env.VITE_GLOB_API_URL}/study/admin_doc/doParseQuestionResult`,{params:{id}}
+  );
+}
+
+
 export async function getQuestionLists(params: QuestionTableApi.PageFetchParams) {
   return requestClient.post(`${import.meta.env.VITE_GLOB_API_URL}/study/ques/getQuestionLists`, params);
 }

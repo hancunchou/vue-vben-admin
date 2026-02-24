@@ -21,11 +21,24 @@ const routes: RouteRecordRaw[] = [
           icon: 'tabler:math-pi-divide-2',
           title: $t('page.tiku.questionList'),
         },
-        children: [],
+        children: [
+          
+        ],
       },
       {
-        name: 'Add',
-        path: '/add',
+            name: 'Docximport',
+            path: '/question/docximport',
+            component: () => import('#/views/tiku/question/docximport.vue'),
+            meta: {
+              affixTab: false,
+              hideInMenu: true,
+              icon: 'tabler:math-pi-divide-2',
+              title: '导入试题',
+            },
+      },
+      {
+        name: 'Question_Add',
+        path: '/question/add',
         component: () => import('#/views/tiku/question/add.vue'),
         meta: {
           affixTab: true,
