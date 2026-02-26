@@ -12,7 +12,6 @@ import { useRoute, onBeforeRouteUpdate } from 'vue-router';
 
 import { doParseQuestionResult } from '#/api/tiku/question';
 
-
 const route = useRoute();
 const recordid = ref(route.query.id);
 
@@ -76,7 +75,7 @@ const [Grid, gridApi] = useVbenVxeGrid({
 
 async function init_record(id: any) {
   const data = await doParseQuestionResult(recordid.value);
-  console.log(data)
+  console.log(data);
 
   // grades.value = [];
   // subjects.value = [];
@@ -94,7 +93,6 @@ async function init_record(id: any) {
 if (recordid.value) {
   init_record(recordid.value);
 }
-
 </script>
 
 <template>

@@ -15,7 +15,6 @@ import { getDocxBlob } from '#/api/tiku/paper';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 
-
 interface RowType {
   questionType: string;
   grade: string;
@@ -131,7 +130,7 @@ const gridOptions: VxeGridProps<RowType> = {
             code: 'view',
             text: '查看',
           },
-           {
+          {
             code: 'down',
             text: '下载',
           },
@@ -191,34 +190,33 @@ const [Grid, gridApi] = useVbenVxeGrid({
 
 function onActionClick(e: any) {
   switch (e.code) {
-    case 'parse': 
-      {
-        router.push({ path: '/question/docximport', query: { id: e.row.id } });
-        break;
-      }
+    case 'parse': {
+      router.push({ path: '/question/docximport', query: { id: e.row.id } });
+      break;
+    }
     case 'view':
       {
         router.push({ path: '/docx/view', query: { id: e.row.id } });
         break;
-      }break;
+      }
+      break;
 
     case 'down':
       {
-        const d=e.row
-        console.log(d)
-         getDocxBlob(d.id).then((data:Blob)=>{
-
-            let blobUrl = window.URL.createObjectURL(data)
-            let link = document.createElement('a')
-            link.download = d.title+".docx"
-            link.style.display = 'none'
-            link.href = blobUrl
-            // 触发点击
-            document.body.appendChild(link)
-            link.click()
-         });
-      } break; 
-   
+        const d = e.row;
+        console.log(d);
+        getDocxBlob(d.id).then((data: Blob) => {
+          let blobUrl = window.URL.createObjectURL(data);
+          let link = document.createElement('a');
+          link.download = d.title + '.docx';
+          link.style.display = 'none';
+          link.href = blobUrl;
+          // 触发点击
+          document.body.appendChild(link);
+          link.click();
+        });
+      }
+      break;
   }
 }
 </script>

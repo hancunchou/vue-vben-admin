@@ -28,7 +28,7 @@ const routes: RouteRecordRaw[] = [
         path: '/docx/view',
         component: () => import('#/views/paper/docx/view.vue'),
         meta: {
-          affixTab: true,
+          affixTab: false,
           hideInMenu: true,
           icon: 'tabler:math-pi-divide-2',
           title: '查看文档',
