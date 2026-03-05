@@ -52,12 +52,11 @@ function loadPaperHtml() {
     if (res.htmlParagraphs)
       for (const p of res.htmlParagraphs) {
         if (p === '') continue;
-          console.log(p)
+        console.log(p);
 
         div.innerHTML = p;
         div.querySelectorAll('img').forEach((node, index) => {
           const img: HTMLImageElement = node as HTMLImageElement;
-
 
           const src = img.getAttribute('src');
           if (src && !src.startsWith('http') && !src.startsWith('data:image')) {
@@ -70,8 +69,6 @@ function loadPaperHtml() {
             img.src =
               'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
           }
-
-
         });
         res.htmlContent = res.htmlContent + div.innerHTML;
       }
@@ -99,27 +96,21 @@ function doParseQuestionResult() {
   .questionContent {
     clear: both;
     padding-bottom: 200px;
-    .wpwrap{
+    .wpwrap {
       // white-space: pre-line;
     }
   }
-
 }
 </style>
 
 <template>
-  <ColPage
-    auto-content-height
-    description="解析导入试题"
-    v-bind="props"
-    title="查看试题"
-  >
+  <ColPage auto-content-height description="解析导入试题" v-bind="props" title="查看试题">
     <template #title>
       <span class="mr-2 text-2xl font-bold">试卷查看、解析</span>
       <!-- <Tag color="hsl(var(--destructive))">Alpha</Tag> -->
     </template>
     <template #extra>
-      <Button type="primary" @click="doParseQuestionResult()" class="mr-2" >解析试题</Button>
+      <Button type="primary" @click="doParseQuestionResult()" class="mr-2">解析试题</Button>
       <Button type="primary" @click="parseDocxHtml()">生成预览</Button>
     </template>
 

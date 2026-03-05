@@ -22,12 +22,3 @@ GradesConfig[2] = [
 
 export const GradesConfigAll=[{label:'年级',value: -1},...GradesConfig[0] ,...GradesConfig[1] ,...GradesConfig[2] ]
 export const allSubjects= await getSubject(-1);
-// const allSubjects=[];
-// export async function getAllSubjects(){
-//   return allSubjects;
-// }
-// getSubject(-1).then((data)=>{
-//   console.log(data)
-// })
-//  const allSubjects= await getSubject(-1);
-

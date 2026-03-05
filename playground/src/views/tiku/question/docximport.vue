@@ -5,7 +5,7 @@ import { ColPage, Page } from '@vben/common-ui';
 import { IconifyIcon } from '@vben/icons';
 import { doParseQuestionResult, doPaperViewHtml } from '#/api/tiku/question';
 
-import { Alert, Button, Card, Checkbox, Slider, Tag, Tooltip ,Select} from 'ant-design-vue';
+import { Alert, Button, Card, Checkbox, Slider, Tag, Tooltip, Select } from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
 import { getStudyDocIndexLists } from '#/api/tiku/paper';
@@ -31,17 +31,23 @@ const gridOptions: VxeGridProps<RowType> = {
     labelField: 'name',
   },
   columns: [
-    { field: 'grade', sortable: false,slots: { header: 'grade_header' }, title: '年级',formatter: formatGrade, width: 100},
-    { field: 'subject', sortable: true, title: '科目', formatter: formatSubject, width: 80  },
-    { field: 'title',  sortable: false, title: '试卷' },
-   
+    {
+      field: 'grade',
+      sortable: false,
+      slots: { header: 'grade_header' },
+      title: '年级',
+      formatter: formatGrade,
+      width: 100,
+    },
+    { field: 'subject', sortable: true, title: '科目', formatter: formatSubject, width: 80 },
+    { field: 'title', sortable: false, title: '试卷' },
   ],
   exportConfig: {},
   height: 'auto',
   keepSource: true,
   proxyConfig: {
     ajax: {
-       query: async ({ page, sort }, formValues) => {
+      query: async ({ page, sort }, formValues) => {
         const data = await getStudyDocIndexLists({
           pi: page.currentPage,
           ps: page.pageSize,
@@ -56,7 +62,7 @@ const gridOptions: VxeGridProps<RowType> = {
         return data;
       },
     },
-     response: {
+    response: {
       result: 'list',
       total: 'total',
       list: 'list',
@@ -71,7 +77,7 @@ const gridOptions: VxeGridProps<RowType> = {
     refresh: false,
   },
   pagerConfig: {
-      layouts: [ 'Sizes', 'PrevPage', 'Number', 'NextPage'],
+    layouts: ['Sizes', 'PrevPage', 'Number', 'NextPage'],
   },
 };
 
@@ -79,12 +85,9 @@ const [Grid, gridApi] = useVbenVxeGrid({
   gridOptions,
 });
 
-
-const search_options={
-  grade:GradesConfigAll[6],
-}
-
-
+const search_options = {
+  grade: GradesConfigAll[6],
+};
 
 const props = reactive({
   leftCollapsedWidth: 5,
@@ -99,17 +102,10 @@ const props = reactive({
 });
 const leftMinWidth = ref(props.leftMinWidth || 1);
 const leftMaxWidth = ref(props.leftMaxWidth || 100);
-
 </script>
 
-
 <template>
-  <ColPage
-    auto-content-height
-    description=""
-    v-bind="props"
-    title=""
-  >
+  <ColPage auto-content-height description="" v-bind="props" title="">
     <template #left="{ isCollapsed, expand }">
       <Card class="ml-2 question-nz-content">
         <Page auto-content-height>
@@ -118,16 +114,19 @@ const leftMaxWidth = ref(props.leftMaxWidth || 100);
       </Card>
     </template>
 
-      <Grid table-title="" table-title-help="">
-        <template #toolbar-tools>
-        </template>
-        <template #grade_header="{ column }">
-         
-          <div class="slotBox">
-            <p class="titleBox2"> <Select :defaultValue="GradesConfigAll[6]" v-model="search_options.grade"  :options="GradesConfigAll"></Select></p>
-          </div>
+    <Grid table-title="" table-title-help="">
+      <template #toolbar-tools> </template>
+      <template #grade_header="{ column }">
+        <div class="slotBox">
+          <p class="titleBox2">
+            <Select
+              :defaultValue="GradesConfigAll[6]"
+              v-model="search_options.grade"
+              :options="GradesConfigAll"
+            ></Select>
+          </p>
+        </div>
       </template>
-      </Grid>
-
+    </Grid>
   </ColPage>
 </template>
