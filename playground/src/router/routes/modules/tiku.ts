@@ -31,7 +31,7 @@ const routes: RouteRecordRaw[] = [
             component: () => import('#/views/tiku/question/docximport.vue'),
             meta: {
               affixTab: false,
-              hideInMenu: true,
+              hideInMenu: false,
               icon: 'tabler:math-pi-divide-2',
               title: '导入试题',
             },

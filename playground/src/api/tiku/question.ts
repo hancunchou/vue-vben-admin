@@ -63,4 +63,8 @@ export async function getQuestionLists(params: QuestionTableApi.PageFetchParams)
 export async function getQuestionTypesApi(params: QuestionTableApi.PageFetchParams) {
   return requestClient.post(`${import.meta.env.VITE_GLOB_API_URL}/study/ques/getQuestionTypes`, params);
 }
-
+export async function doPaperViewHtml(id: number) {
+  return requestClient.get<any>(
+    `${import.meta.env.VITE_GLOB_API_URL}/study/admin_doc/doPaperViewHtml`,{params:{id}}
+  );
+}

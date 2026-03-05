@@ -1,28 +1,27 @@
 <script lang="ts" setup>
 import type { VxeGridProps } from '#/adapter/vxe-table';
 
-import { Page } from '@vben/common-ui';
+import { ColPage, Page } from '@vben/common-ui';
+import { IconifyIcon } from '@vben/icons';
+import { doParseQuestionResult, doPaperViewHtml } from '#/api/tiku/question';
 
-import { Button } from 'ant-design-vue';
-import { ref } from 'vue';
+import { Alert, Button, Card, Checkbox, Slider, Tag, Tooltip ,Select} from 'ant-design-vue';
 
 import { useVbenVxeGrid } from '#/adapter/vxe-table';
-import { getQuestionLists } from '#/api/tiku/question';
+import { getStudyDocIndexLists } from '#/api/tiku/paper';
+
+import { getDocxBlob, getPaperView } from '#/api/tiku/paper';
+import { getAbsUrl } from '#/api/core/cdn';
+
 import { useRoute, onBeforeRouteUpdate } from 'vue-router';
+import { ref, reactive } from 'vue';
+import { renderAsync } from 'docx-preview';
+import { GradesConfigAll, allSubjects } from '#/config/study';
 
-import { doParseQuestionResult } from '#/api/tiku/question';
-
-const route = useRoute();
-const recordid = ref(route.query.id);
+import { formatGrade, formatSubject } from '#/formatter/formatter';
 
 interface RowType {
-  questionType: string;
-  grade: string;
-  id: string;
-  subject: string;
-  difficulty: string;
   title: string;
-  updateTime: string;
 }
 
 const gridOptions: VxeGridProps<RowType> = {
@@ -32,40 +31,47 @@ const gridOptions: VxeGridProps<RowType> = {
     labelField: 'name',
   },
   columns: [
-    { field: 'id', title: '序号', type: 'seq', width: 100 },
-    { field: 'questionType', title: '题型', width: 100 },
-    { field: 'grade', sortable: true, title: '年级', width: 100 },
-    { field: 'subject', sortable: true, title: '科目', width: 100 },
-    { field: 'difficulty', sortable: true, title: '难度', width: 100 },
-    { field: 'title', sortable: false, title: '内容' },
-    { field: 'updateTime', formatter: 'formatDateTime', title: '更新时间', width: 150 },
+    { field: 'grade', sortable: false,slots: { header: 'grade_header' }, title: '年级',formatter: formatGrade, width: 100},
+    { field: 'subject', sortable: true, title: '科目', formatter: formatSubject, width: 80  },
+    { field: 'title',  sortable: false, title: '试卷' },
+   
   ],
   exportConfig: {},
   height: 'auto',
   keepSource: true,
   proxyConfig: {
     ajax: {
-      query: async ({ page, sort }) => {
-        return await getQuestionLists({
+       query: async ({ page, sort }, formValues) => {
+        const data = await getStudyDocIndexLists({
           pi: page.currentPage,
           ps: page.pageSize,
           sortBy: sort.field,
           sortOrder: sort.order,
+          finaldoc: false,
         });
+        for (const d of data.list) {
+          d.createTime = d.createTime * 1000;
+          d.updateTime = d.updateTime * 1000;
+        }
+        return data;
       },
+    },
+     response: {
+      result: 'list',
+      total: 'total',
+      list: 'list',
     },
     sort: true,
   },
   sortConfig: {
-    defaultSort: { field: 'grade', order: 'asc' },
+    defaultSort: { field: 'id', order: 'asc' },
     remote: true,
   },
   toolbarConfig: {
-    custom: true,
-    export: true,
-    // import: true,
-    refresh: true,
-    zoom: true,
+    refresh: false,
+  },
+  pagerConfig: {
+      layouts: [ 'Sizes', 'PrevPage', 'Number', 'NextPage'],
   },
 };
 
@@ -73,38 +79,55 @@ const [Grid, gridApi] = useVbenVxeGrid({
   gridOptions,
 });
 
-async function init_record(id: any) {
-  const data = await doParseQuestionResult(recordid.value);
-  console.log(data);
 
-  // grades.value = [];
-  // subjects.value = [];
-  // let i = 0;
-  // const gradeLong: number = Number(data.grades);
-  // const subject: number = Number(data.subjects);
-
-  // for (i = 0; i < 64; i++) {
-  //   if (gradeLong & (1 << i)) grades.value.push(i);
-  //   if (subject & (1 << i)) subjects.value.push(i);
-  // }
-
-  // formApi.setValues(data);
+const search_options={
+  grade:GradesConfigAll[6],
 }
-if (recordid.value) {
-  init_record(recordid.value);
-}
+
+
+
+const props = reactive({
+  leftCollapsedWidth: 5,
+  leftCollapsible: true,
+  leftMaxWidth: 100,
+  leftMinWidth: 45,
+  leftWidth: 55,
+  resizable: true,
+  rightWidth: 30,
+  splitHandle: true,
+  splitLine: true,
+});
+const leftMinWidth = ref(props.leftMinWidth || 1);
+const leftMaxWidth = ref(props.leftMaxWidth || 100);
+
 </script>
 
+
 <template>
-  <Page auto-content-height>
-    <Grid table-title="试题列表" table-title-help="提示">
-      <template #toolbar-tools>
-        <router-link to="/add">
-          <Button class="mr-2" type="primary"> 添加试题 </Button>
-        </router-link>
-        <Button class="mr-2" type="primary" @click="() => gridApi.query()"> 刷新当前页面 </Button>
-        <Button type="primary" @click="() => gridApi.reload()"> 刷新并返回第一页 </Button>
+  <ColPage
+    auto-content-height
+    description=""
+    v-bind="props"
+    title=""
+  >
+    <template #left="{ isCollapsed, expand }">
+      <Card class="ml-2 question-nz-content">
+        <Page auto-content-height>
+          <div id="paperhtml" class="questionContent"></div>
+        </Page>
+      </Card>
+    </template>
+
+      <Grid table-title="" table-title-help="">
+        <template #toolbar-tools>
+        </template>
+        <template #grade_header="{ column }">
+         
+          <div class="slotBox">
+            <p class="titleBox2"> <Select :defaultValue="GradesConfigAll[6]" v-model="search_options.grade"  :options="GradesConfigAll"></Select></p>
+          </div>
       </template>
-    </Grid>
-  </Page>
+      </Grid>
+
+  </ColPage>
 </template>

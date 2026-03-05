@@ -3,7 +3,7 @@ import type { VxeGridProps } from '#/adapter/vxe-table';
 
 import { ColPage, Page } from '@vben/common-ui';
 import { IconifyIcon } from '@vben/icons';
-import { doParseQuestionResult } from '#/api/tiku/question';
+import { doParseQuestionResult, doPaperViewHtml } from '#/api/tiku/question';
 
 import { Alert, Button, Card, Checkbox, Slider, Tag, Tooltip } from 'ant-design-vue';
 
@@ -23,11 +23,11 @@ const recordid = ref(route.query.id).value;
 const props = reactive({
   leftCollapsedWidth: 5,
   leftCollapsible: true,
-  leftMaxWidth: 80,
+  leftMaxWidth: 100,
   leftMinWidth: 20,
-  leftWidth: 50,
+  leftWidth: 80,
   resizable: true,
-  rightWidth: 50,
+  rightWidth: 20,
   splitHandle: true,
   splitLine: true,
 });
@@ -39,23 +39,26 @@ if (recordid) {
     renderAsync(data, document.getElementById('container'), null, { useBase64URL: true }).then(
       (doc: any) => console.log(doc)
     );
+    loadPaperHtml();
   });
-  loadPaperHtml();
 }
 
 function loadPaperHtml() {
   getPaperView(recordid, 0).then((res) => {
     const baseUri = getAbsUrl(res.imgBaseUrl);
     res.htmlContent = '';
+    const div: HTMLDivElement = document.createElement('div');
 
     if (res.htmlParagraphs)
       for (const p of res.htmlParagraphs) {
         if (p === '') continue;
-        const div: HTMLDivElement = document.createElement('div');
-        div.innerHTML = p;
+          console.log(p)
 
+        div.innerHTML = p;
         div.querySelectorAll('img').forEach((node, index) => {
           const img: HTMLImageElement = node as HTMLImageElement;
+
+
           const src = img.getAttribute('src');
           if (src && !src.startsWith('http') && !src.startsWith('data:image')) {
             img.src = baseUri + src;
@@ -67,6 +70,8 @@ function loadPaperHtml() {
             img.src =
               'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
           }
+
+
         });
         res.htmlContent = res.htmlContent + div.innerHTML;
       }
@@ -75,7 +80,12 @@ function loadPaperHtml() {
   });
 }
 
-function parseDocx() {
+function parseDocxHtml() {
+  doPaperViewHtml(recordid).then(() => {
+    loadPaperHtml();
+  });
+}
+function doParseQuestionResult() {
   doParseQuestionResult(recordid).then(() => {
     loadPaperHtml();
   });
@@ -89,23 +99,28 @@ function parseDocx() {
   .questionContent {
     clear: both;
     padding-bottom: 200px;
+    .wpwrap{
+      // white-space: pre-line;
+    }
   }
+
 }
 </style>
 
 <template>
   <ColPage
     auto-content-height
-    description="ColPage 是一个双列布局组件，支持左侧折叠、拖拽调整宽度等功能。"
+    description="解析导入试题"
     v-bind="props"
-    title="ColPage 双列布局组件"
+    title="查看试题"
   >
     <template #title>
-      <span class="mr-2 text-2xl font-bold">ColPage 双列布局组件</span>
-      <Tag color="hsl(var(--destructive))">Alpha</Tag>
+      <span class="mr-2 text-2xl font-bold">试卷查看、解析</span>
+      <!-- <Tag color="hsl(var(--destructive))">Alpha</Tag> -->
     </template>
     <template #extra>
-      <Button type="primary" @click="parseDocx()">解析试题</Button>
+      <Button type="primary" @click="doParseQuestionResult()" class="mr-2" >解析试题</Button>
+      <Button type="primary" @click="parseDocxHtml()">生成预览</Button>
     </template>
 
     <template #left="{ isCollapsed, expand }">
@@ -115,10 +130,10 @@ function parseDocx() {
         </Page>
       </Card>
     </template>
-    <Card title="试卷解析">
+    <!-- <Card title="试卷解析">
       <Page auto-content-height>
         <div id="container"></div>
       </Page>
-    </Card>
+    </Card> -->
   </ColPage>
 </template>

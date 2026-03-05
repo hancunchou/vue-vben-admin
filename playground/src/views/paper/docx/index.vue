@@ -200,7 +200,7 @@ function onActionClick(e: any) {
         break;
       }
       break;
-
+  
     case 'down':
       {
         const d = e.row;

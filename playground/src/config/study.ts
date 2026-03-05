@@ -20,7 +20,7 @@ GradesConfig[2] = [
   { label: '高三', value: 12 },
 ];
 
-export const GradesConfigAll=[...GradesConfig[0] ,...GradesConfig[1] ,...GradesConfig[2] ]
+export const GradesConfigAll=[{label:'年级',value: -1},...GradesConfig[0] ,...GradesConfig[1] ,...GradesConfig[2] ]
 export const allSubjects= await getSubject(-1);
 // const allSubjects=[];
 // export async function getAllSubjects(){
